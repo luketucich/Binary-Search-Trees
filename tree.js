@@ -29,7 +29,7 @@ class Tree {
     }
 
     // Do not allow duplicate nodes
-    if (value == currNode.data) return "Value already in BST";
+    if (value == currNode.data) return "INSERT ERROR: Value already in BST";
 
     // Search for "value" placement & create new node
     if (value > currNode.data && currNode.data !== null) {
@@ -61,14 +61,13 @@ class Tree {
 
     // Search for "value" placement
     if (value > currNode.data) {
-      console.log(currNode);
       currNode.right !== null
         ? this.delete(value, currNode.right)
-        : console.log("Value not in BST");
+        : console.log("DELETE ERROR: Value not in BST");
     } else if (value < currNode.data) {
       currNode.left !== null
         ? this.delete(value, currNode.left)
-        : console.log("Value not in BST");
+        : console.log("DELETE ERROR: Value not in BST");
       // If "value" is found
     } else {
       // If leaf node (no children)
@@ -94,6 +93,27 @@ class Tree {
       }
     }
   }
+
+  find(value, currNode = this.root) {
+    if (currNode === null) return "SEARCH ERROR: Value not in BST";
+    if (value == currNode.data) return currNode;
+
+    // Search for "value" placement
+    if (value > currNode.data) {
+      return this.find(value, currNode.right);
+    } else if (value < currNode.data) {
+      return this.find(value, currNode.left);
+    }
+  }
+
+  levelOrder(callback) {}
+  inOrder(callback) {}
+  preOrder(callback) {}
+  postOrder(callback) {}
+  height(node) {}
+  depth(node) {}
+  isBalanced() {}
+  rebalance() {}
 }
 
 const arr = uniqueSortedArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
@@ -111,3 +131,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };
+
+tree.buildTree(tree.arr);
+tree.delete(7);
+console.log(tree.find(7));
