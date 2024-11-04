@@ -106,14 +106,28 @@ class Tree {
     }
   }
 
-  levelOrder(callback) {}
-  inOrder(callback) {}
-  preOrder(callback) {}
-  postOrder(callback) {}
-  height(node) {}
-  depth(node) {}
-  isBalanced() {}
-  rebalance() {}
+  levelOrder(callback) {
+    if (!callback) throw new Error("A callback parameter is required!");
+
+    const queue = [this.root];
+
+    while (queue.length) {
+      const currNode = queue.shift();
+      currNode.left && queue.push(currNode.left);
+      currNode.right && queue.push(currNode.right);
+      callback(currNode.data);
+    }
+  }
+
+  inOrder(callback) {
+    if (!callback) throw new Error("A callback parameter is required!");
+  }
+  // preOrder(callback) {}
+  // postOrder(callback) {}
+  // height(node) {}
+  // depth(node) {}
+  // isBalanced() {}
+  // rebalance() {}
 }
 
 const arr = uniqueSortedArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
@@ -133,5 +147,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 tree.buildTree(tree.arr);
-tree.delete(7);
-console.log(tree.find(7));
+prettyPrint(tree.root);
+tree.levelOrder((value) => console.log(value));
