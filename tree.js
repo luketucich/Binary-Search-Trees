@@ -145,10 +145,29 @@ class Tree {
     this.postOrder(callback, currNode.right);
     console.log(currNode.data);
   }
-  // height(node) {}
-  // depth(node) {}
-  // isBalanced() {}
-  // rebalance() {}
+
+  depth(value, currNode = this.root, count = 0) {
+    if (currNode === null) return "DEPTH ERROR: Value not in BST";
+    if (value == currNode.data) return count;
+
+    // Search for "value" placement
+    if (value > currNode.data) {
+      return this.depth(value, currNode.right, count + 1);
+    } else if (value < currNode.data) {
+      return this.depth(value, currNode.left, count + 1);
+    }
+  }
+
+  height(value, currNode = this.find(value), count = 0) {
+    if (currNode === "SEARCH ERROR: Value not in BST")
+      return "HEIGHT ERROR: Value not in BST";
+
+    if (currNode === null) return -1;
+    let leftHeight = this.height(value, currNode.left, count++);
+    let rightHeight = this.height(value, currNode.right, count++);
+
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
 }
 
 const arr = uniqueSortedArray([1, 2, 3, 4, 5, 6, 7]);
@@ -168,5 +187,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 tree.buildTree(tree.arr);
+tree.insert(10);
 prettyPrint(tree.root);
-tree.postOrder((value) => console.log(value));
+console.log(tree.height(3124));
