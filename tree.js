@@ -20,6 +20,80 @@ class Tree {
     this.root = root;
     return root;
   }
+
+  insert(value, currNode = this.root) {
+    // Insert node to root if empty
+    if (this.root === null) {
+      this.root = new Node(value, null, null);
+      return this.root;
+    }
+
+    // Do not allow duplicate nodes
+    if (value == currNode.data) return "Value already in BST";
+
+    // Search for "value" placement & create new node
+    if (value > currNode.data && currNode.data !== null) {
+      return currNode.right == null
+        ? (currNode.right = new Node(value, null, null))
+        : this.insert(value, currNode.right);
+    } else if (value < currNode.data && currNode.data !== null) {
+      return currNode.left == null
+        ? (currNode.left = new Node(value, null, null))
+        : this.insert(value, currNode.left);
+    } else {
+      Object.assign(currNode, new Node(value, null, null));
+    }
+  }
+
+  getSuccessor(currNode) {
+    currNode = currNode.right;
+    while (currNode !== null && currNode.left !== null) {
+      currNode = currNode.left;
+    }
+    return currNode;
+  }
+
+  delete(value, currNode = this.root) {
+    // Return null if tree empty
+    if (this.root === null) {
+      return null;
+    }
+
+    // Search for "value" placement
+    if (value > currNode.data) {
+      console.log(currNode);
+      currNode.right !== null
+        ? this.delete(value, currNode.right)
+        : console.log("Value not in BST");
+    } else if (value < currNode.data) {
+      currNode.left !== null
+        ? this.delete(value, currNode.left)
+        : console.log("Value not in BST");
+      // If "value" is found
+    } else {
+      // If leaf node (no children)
+      if (currNode.left == null && currNode.right == null) {
+        currNode.data = null;
+      }
+
+      // If one child on right
+      if (currNode.left == null && currNode.right !== null) {
+        Object.assign(currNode, currNode.right);
+      }
+
+      // If one child on left
+      if (currNode.left !== null && currNode.right == null) {
+        Object.assign(currNode, currNode.left);
+      }
+
+      // If two children
+      if (currNode.left !== null && currNode.right !== null) {
+        const successor = this.getSuccessor(currNode);
+        currNode.data = successor.data;
+        this.delete(successor.data, currNode.right);
+      }
+    }
+  }
 }
 
 const arr = uniqueSortedArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
@@ -37,6 +111,3 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };
-
-tree.buildTree(tree.arr);
-prettyPrint(tree.root);
