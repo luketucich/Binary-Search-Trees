@@ -119,18 +119,39 @@ class Tree {
     }
   }
 
-  inOrder(callback) {
+  inOrder(callback, currNode = this.root) {
     if (!callback) throw new Error("A callback parameter is required!");
+    if (currNode == null) return;
+
+    this.inOrder(callback, currNode.left);
+    callback(currNode.data);
+    this.inOrder(callback, currNode.right);
   }
-  // preOrder(callback) {}
-  // postOrder(callback) {}
+
+  preOrder(callback, currNode = this.root) {
+    if (!callback) throw new Error("A callback parameter is required!");
+    if (currNode == null) return;
+
+    console.log(currNode.data);
+    this.preOrder(callback, currNode.left);
+    this.preOrder(callback, currNode.right);
+  }
+
+  postOrder(callback, currNode = this.root) {
+    if (!callback) throw new Error("A callback parameter is required!");
+    if (currNode == null) return;
+
+    this.postOrder(callback, currNode.left);
+    this.postOrder(callback, currNode.right);
+    console.log(currNode.data);
+  }
   // height(node) {}
   // depth(node) {}
   // isBalanced() {}
   // rebalance() {}
 }
 
-const arr = uniqueSortedArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+const arr = uniqueSortedArray([1, 2, 3, 4, 5, 6, 7]);
 const tree = new Tree(arr);
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -148,4 +169,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 tree.buildTree(tree.arr);
 prettyPrint(tree.root);
-tree.levelOrder((value) => console.log(value));
+tree.postOrder((value) => console.log(value));
