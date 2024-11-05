@@ -18,7 +18,7 @@ Developing this Binary Search Tree was a valuable learning experience. Here are 
 - **Code Modularity and Reusability:** Using classes and modular code structures emphasized the importance of clean, maintainable code.
 - **Practical Application of Algorithms:** Hands-on implementation of searching, sorting, and traversal algorithms solidified my theoretical knowledge through practical application.
 
-Overall, this project was a great way to enhance my skills in data structures and JavaScript.
+Overall, this project was a great way to enhance my skills in data structures and JavaScript. Credit to The Odin Project for the prettyPrint() method.
 
 ## Usage Example:
 
