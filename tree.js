@@ -163,30 +163,55 @@ class Tree {
       return "HEIGHT ERROR: Value not in BST";
 
     if (currNode === null) return -1;
-    let leftHeight = this.height(value, currNode.left, count++);
-    let rightHeight = this.height(value, currNode.right, count++);
+    const leftHeight = this.height(value, currNode.left, count++);
+    const rightHeight = this.height(value, currNode.right, count++);
 
     return Math.max(leftHeight, rightHeight) + 1;
   }
+
+  isBalanced(rootNode = this.root) {
+    const leftHeight = this.height(rootNode.left.data);
+    const rightHeight = this.height(rootNode.right.data);
+    const heightDiff = Math.abs(leftHeight - rightHeight);
+
+    return heightDiff > 1 ? false : true;
+  }
+
+  rebalance() {
+    if (this.isBalanced()) return "REBALANCE ERROR: BST already balanced";
+
+    // Reset array
+    this.arr = [];
+    // Update arry
+    this.inOrder((value) => this.arr.push(value));
+    // Build new BST with updated array
+    this.buildTree(this.arr);
+  }
+
+  prettyPrint(node = this.root, prefix = "", isLeft = true) {
+    if (node === null) {
+      return;
+    }
+    if (node.right !== null) {
+      this.prettyPrint(
+        node.right,
+        `${prefix}${isLeft ? "│        " : "         "}`,
+        false
+      );
+    }
+    console.log(`${prefix}${isLeft ? "└────── " : "┌────── "}${node.data}`);
+    if (node.left !== null) {
+      this.prettyPrint(
+        node.left,
+        `${prefix}${isLeft ? "         " : "│        "}`,
+        true
+      );
+    }
+  }
 }
 
-const arr = uniqueSortedArray([1, 2, 3, 4, 5, 6, 7]);
+const arr = uniqueSortedArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 const tree = new Tree(arr);
 
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
-};
-
-tree.buildTree(tree.arr);
-tree.insert(10);
-prettyPrint(tree.root);
-console.log(tree.height(3124));
+tree.buildTree(arr);
+tree.prettyPrint();
