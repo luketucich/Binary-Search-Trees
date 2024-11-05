@@ -13,7 +13,7 @@ Developing this Binary Search Tree was a valuable learning experience. Here are 
 
 - **Deep Understanding of Recursion:** Implementing the tree traversal methods and the buildTree function significantly improved my grasp of recursive algorithms and their applications.
 - **Dynamic Data Handling:** The tree dynamically adjusts as nodes are added or removed, reflecting real-world data structures' dynamic nature.
-- **Efficient Problem-Solving:** Writing methods like `insert`, `delete`, and `find` honed my skills in breaking down complex problems into manageable, logical steps.
+- **Efficient Problem-Solving:** Writing methods like `insert`, `delete`, and `height` honed my skills in breaking down complex problems into manageable, logical steps.
 - **Balancing Trees:** Understanding and implementing tree balancing techniques, such as rebalancing, to maintain optimal performance.
 - **Code Modularity and Reusability:** Using classes and modular code structures emphasized the importance of clean, maintainable code.
 - **Practical Application of Algorithms:** Hands-on implementation of searching, sorting, and traversal algorithms solidified my theoretical knowledge through practical application.
